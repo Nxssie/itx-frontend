@@ -6,7 +6,6 @@ import {
     SelectContent,
     SelectGroup,
     SelectItem,
-    SelectLabel,
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
@@ -20,7 +19,8 @@ import {
 } from "@/components/ui/breadcrumb"
 import {useCart} from "@/hooks/useCart.js";
 import {Button} from "@/components/ui/button.jsx";
-import {CaretLeftIcon} from "@phosphor-icons/react";
+import {CaretLeftIcon, WarningCircleIcon} from "@phosphor-icons/react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 const ProductDetailPage = () => {
     const params = useParams();
@@ -28,6 +28,8 @@ const ProductDetailPage = () => {
     const [colorCode, setColorCode] = useState("");
     const [storageCode, setStorageCode] = useState("");
     const {count, addToCart} = useCart();
+    const [error, setError] = useState(null);
+    const [cartError, setCartError] = useState(null);
 
     useEffect(() => {
         api.getProductDetail(params.id).then(setProduct);
@@ -35,6 +37,18 @@ const ProductDetailPage = () => {
 
     if (!product) {
         return <p>Loading...</p>
+    }
+
+    if( error ) {
+        return (
+            <Alert variant="destructive" className="max-w-md">
+                <WarningCircleIcon />
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>
+                    {error}
+                </AlertDescription>
+            </Alert>
+        )
     }
 
     return (
@@ -107,8 +121,21 @@ const ProductDetailPage = () => {
 
                     </div>
                     <div className="mt-4">
-                        <Button onClick={() => addToCart({id: product.id, colorCode, storageCode})}
-                                disabled={!colorCode || !storageCode} type="submit">Añadir al carrito</Button>
+                        <Button
+                            onClick={() => addToCart({id: product.id, colorCode, storageCode})
+                                .catch(e => setCartError(e.message))}
+                            disabled={!colorCode || !storageCode}
+                            type="submit"
+                        >
+                            Añadir al carrito
+                        </Button>
+                        {cartError &&
+                            <Alert variant="destructive" className="max-w-md mt-2">
+                                <WarningCircleIcon />
+                                <AlertTitle>Error</AlertTitle>
+                                <AlertDescription>{cartError}</AlertDescription>
+                            </Alert>
+                        }
                     </div>
                 </div>
             </div>

@@ -38,11 +38,10 @@ describe('useCart', () => {
     })
 
     it('shouldn\'t update count if api throws error', async () => {
-        vi.spyOn(console, 'error').mockImplementation(() => {})
         api.addToCart.mockRejectedValue(new Error('API error'));
         const {result} = renderHook(() => useCart());
         await act(async () => {
-            result.current.addToCart({ id: '1', colorCode: '2', storageCode: '3' })
+            result.current.addToCart({ id: '1', colorCode: '2', storageCode: '3' }).catch(() => {})
         })
         expect(result.current.count).toEqual(0);
     })

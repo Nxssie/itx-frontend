@@ -16,7 +16,6 @@ export const api = {
         const data = await response.json();
 
         storage.set(CACHE_KEY, data);
-
         return data;
     },
 
