@@ -1,8 +1,7 @@
-import {createContext, useState} from "react";
+import {useState} from "react";
 import {storage} from "@/utils/storage.js";
 import {api} from "@/services/api.js";
-
-export const CartContext = createContext();
+import {CartContext} from "@/context/CartContext.js";
 
 export const CartProvider = ({children}) => {
     const [count, setCount] = useState(storage.get("cartCount", null) ?? 0);

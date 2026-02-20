@@ -27,7 +27,7 @@ export const storage = {
             }
 
             return value;
-        } catch (error) {
+        } catch {
             // Clean up corrupted or invalid JSON data
             localStorage.removeItem(key);
             return null;

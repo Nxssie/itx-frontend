@@ -25,17 +25,16 @@ const ProductDetailPage = () => {
     const [cartError, setCartError] = useState(null);
 
     useEffect(() => {
-        api.getProductDetail(params.id).then(setProduct).catch(e => setError(e.message));
+        api.getProductDetail(params.id).then(data => {
+            setProduct(data);
+            if (data.options.colors.length === 1) {
+                setColorCode(String(data.options.colors[0].code));
+            }
+            if (data.options.storages.length === 1) {
+                setStorageCode(String(data.options.storages[0].code));
+            }
+        }).catch(e => setError(e.message));
     }, [params.id])
-
-    useEffect(() => {
-        if (product?.options.colors.length === 1) {
-            setColorCode(String(product.options.colors[0].code));
-        }
-        if (product?.options.storages.length === 1) {
-            setStorageCode(String(product.options.storages[0].code));
-        }
-    }, [product])
 
     if (error) {
         return (

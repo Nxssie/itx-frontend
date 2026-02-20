@@ -2,7 +2,7 @@ import {Route, Switch} from 'wouter';
 import ProductListPage from "@/pages/ProductListPage.jsx";
 import ProductDetailPage from "@/pages/ProductDetailPage.jsx";
 import Header from "@/components/Header.jsx";
-import {CartProvider} from "@/context/CartContext.jsx";
+import {CartProvider} from "@/context/CartProvider.jsx";
 
 function App() {
 

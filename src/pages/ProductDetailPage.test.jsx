@@ -1,8 +1,8 @@
 import {describe, it, expect, afterEach, vi} from 'vitest';
-import {render, screen, cleanup, waitFor, fireEvent} from '@testing-library/react';
+import {render, screen, cleanup, waitFor} from '@testing-library/react';
 import ProductDetailPage from './ProductDetailPage.jsx';
 import {api} from "@/services/api.js";
-import {CartProvider} from "@/context/CartContext.jsx";
+import {CartProvider} from "@/context/CartProvider.jsx";
 
 vi.mock('@/services/api.js', () => ({
     api: {

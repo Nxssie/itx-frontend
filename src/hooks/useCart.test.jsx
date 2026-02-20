@@ -3,7 +3,7 @@ import {renderHook, act} from '@testing-library/react';
 import {useCart} from "@/hooks/useCart.js";
 import {storage} from "@/utils/storage.js";
 import {api} from "@/services/api.js";
-import {CartProvider} from "@/context/CartContext.jsx";
+import {CartProvider} from "@/context/CartProvider.jsx";
 
 vi.mock('@/services/api.js', () => ({
   api: {
