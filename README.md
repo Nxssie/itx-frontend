@@ -62,3 +62,7 @@ Testing is intentionally focused on the core business logic rather than pure UI 
 - **Product detail** — image, specs, and color/storage selectors
 - **Cart** — add products with a persistent item count in the header. The cart count is accumulated client-side because the API POST `/cart` endpoint always returns `{ count: 1 }` rather than the total number of items in the cart
 - **Cache** — client-side API response caching using `localStorage` with a strict 1-hour expiration
+
+## AI usage
+
+AI tools were used in a light-to-moderate capacity during the development of this project, primarily as a guidance and review companion rather than as a code generator. This included discussing implementation approaches, reviewing code for potential issues, and getting suggestions on Tailwind utility classes. All architectural decisions, component design, and business logic were driven by the developer. AI assistance is part of modern development workflows and was used here as a productivity tool, similar to documentation or IDE autocompletion.
