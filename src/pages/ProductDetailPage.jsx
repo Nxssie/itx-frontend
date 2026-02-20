@@ -1,4 +1,4 @@
-import {useParams} from 'wouter';
+import {Link, useParams} from 'wouter';
 import {useEffect, useState} from "react";
 import {api} from "@/services/api.js";
 import {
@@ -10,6 +10,14 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 import {useCart} from "@/hooks/useCart.js";
 import {Button} from "@/components/ui/button.jsx";
 
@@ -30,6 +38,19 @@ const ProductDetailPage = () => {
 
     return (
         <>
+            <Breadcrumb>
+                <BreadcrumbList>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink asChild>
+                            <Link to="/">Home</Link>
+                        </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                        <BreadcrumbPage>{product.brand} {product.model}</BreadcrumbPage>
+                    </BreadcrumbItem>
+                </BreadcrumbList>
+            </Breadcrumb>
             <div className="grid grid-cols-2">
                 <img src={product.imgUrl}/>
                 <div>
@@ -41,8 +62,8 @@ const ProductDetailPage = () => {
                         <li>OS: {product.os}</li>
                         <li>Display Resolution: {product.displayResolution}</li>
                         <li>Battery: {product.battery}</li>
-                        <li>Primary Camera: {product.primaryCamera.join(", ")}</li>
-                        <li>Secondary Camera: {product.secondaryCmera.join(", ")}</li>
+                        <li>Primary Camera: {Array.isArray(product.primaryCamera) ? product.primaryCamera.join(", ") : product.primaryCamera}</li>
+                        <li>Secondary Camera: {Array.isArray(product.secondaryCmera) ? product.secondaryCmera.join(", ") : product.secondaryCmera}</li>
                         <li>Dimensions: {product.dimentions}</li>
                         <li>Weight: {product.weight} grams</li>
                     </ul>

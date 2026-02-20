@@ -16,7 +16,7 @@ const ProductCard = props => {
                 </div>
                 <CardHeader>
                     <CardTitle>{props.product.brand} - {props.product.model}</CardTitle>
-                    <CardDescription>{props.product.price}€</CardDescription>
+                    <CardDescription>{props.product.price === "" ? 0 : props.product.price}€</CardDescription>
                 </CardHeader>
             </Card>
         </Link>
