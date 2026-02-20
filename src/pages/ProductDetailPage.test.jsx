@@ -110,7 +110,7 @@ describe('ProductDetailPage', () => {
         api.getProductDetail.mockResolvedValue(mockProduct);
         render(<ProductDetailPage/>, {wrapper});
         await waitFor(() => {
-            expect(screen.getByText('Añadir al carrito').closest('button').disabled).toBe(true);
+            expect(screen.getByText('Add to cart').closest('button').disabled).toBe(true);
         });
     })
 

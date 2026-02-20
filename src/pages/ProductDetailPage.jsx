@@ -20,13 +20,13 @@ const ProductDetailPage = () => {
     const [product, setProduct] = useState(null);
     const [colorCode, setColorCode] = useState("");
     const [storageCode, setStorageCode] = useState("");
-    const {count, addToCart} = useCart();
+    const {addToCart} = useCart();
     const [error, setError] = useState(null);
     const [cartError, setCartError] = useState(null);
 
     useEffect(() => {
         api.getProductDetail(params.id).then(setProduct).catch(e => setError(e.message));
-    }, [])
+    }, [params.id])
 
     useEffect(() => {
         if (product?.options.colors.length === 1) {
@@ -58,7 +58,7 @@ const ProductDetailPage = () => {
             <Link to="/" className="flex items-center gap-1"><CaretLeftIcon/> Back </Link>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
                 <div className="border rounded-lg p-4 flex justify-center items-center">
-                    <img className="object-contain w-full max-h-96" src={product.imgUrl}/>
+                    <img className="object-contain w-full max-h-96" src={product.imgUrl} alt={`${product.model} image`}/>
                 </div>
 
                 <div>
@@ -121,7 +121,7 @@ const ProductDetailPage = () => {
                             disabled={!colorCode || !storageCode}
                             type="submit"
                         >
-                            Añadir al carrito
+                            Add to cart
                         </Button>
                         {cartError &&
                             <Alert variant="destructive" className="max-w-md mt-2">
