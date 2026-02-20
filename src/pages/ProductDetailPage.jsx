@@ -37,10 +37,6 @@ const ProductDetailPage = () => {
         }
     }, [product])
 
-    if (!product) {
-        return <p>Loading...</p>
-    }
-
     if (error) {
         return (
             <Alert variant="destructive" className="max-w-md">
@@ -51,6 +47,10 @@ const ProductDetailPage = () => {
                 </AlertDescription>
             </Alert>
         )
+    }
+
+    if (!product) {
+        return <p>Loading...</p>
     }
 
     return (
@@ -116,7 +116,6 @@ const ProductDetailPage = () => {
                     <div className="mt-4">
                         <Button
                             onClick={() => {
-                                console.log({ id: product.id, colorCode, storageCode })
                                 addToCart({id: product.id, colorCode, storageCode}).catch(e => setCartError(e.message));
                             }}
                             disabled={!colorCode || !storageCode}
