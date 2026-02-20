@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import {useCart} from "@/hooks/useCart.js";
 import {Button} from "@/components/ui/button.jsx";
+import {CaretLeftIcon} from "@phosphor-icons/react";
 
 const ProductDetailPage = () => {
     const params = useParams();
@@ -38,6 +39,7 @@ const ProductDetailPage = () => {
 
     return (
         <>
+            <Link to="/" className="flex items-center gap-1"><CaretLeftIcon/> Back </Link>
             <Breadcrumb>
                 <BreadcrumbList>
                     <BreadcrumbItem>
@@ -51,12 +53,12 @@ const ProductDetailPage = () => {
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
-            <div className="grid grid-cols-2">
-                <img src={product.imgUrl}/>
+            <div className="grid grid-cols-1 md:grid-cols-2">
+                <img className="mt-4 object-contain mx-auto" src={product.imgUrl}/>
                 <div>
-                    <h1>{product.brand} - {product.model}</h1>
+                    <h1 className="text-2xl font-bold">{product.brand} - {product.model}</h1>
+                    <p className="text-xl font-semibold">{product.price}€</p>
                     <ul>
-                        <li>{product.price}€</li>
                         <li>CPU: {product.cpu}</li>
                         <li>RAM: {product.ram}</li>
                         <li>OS: {product.os}</li>
@@ -67,36 +69,42 @@ const ProductDetailPage = () => {
                         <li>Dimensions: {product.dimentions}</li>
                         <li>Weight: {product.weight} grams</li>
                     </ul>
-                    <div className="grid grid-cols-2 mt-4">
-                        <Select value={colorCode} onValueChange={setColorCode}>
-                            <SelectTrigger className="w-full max-w-48">
-                                <SelectValue/>
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    {product.options.colors.map((item) => (
-                                        <SelectItem key={item.code} value={String(item.code)}>
-                                            {item.name}
-                                        </SelectItem>
-                                    ))}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
+                    <div className="flex gap-4 mt-4">
+                        <div className="flex-1">
+                            <span className="text-sm font-medium">Color</span>
+                            <Select value={colorCode} onValueChange={setColorCode}>
+                                <SelectTrigger className="w-full max-w-48">
+                                    <SelectValue/>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        {product.options.colors.map((item) => (
+                                            <SelectItem key={item.code} value={String(item.code)}>
+                                                {item.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="flex-1">
+                            <span className="text-sm font-medium">Storage</span>
+                            <Select value={storageCode} onValueChange={setStorageCode}>
+                                <SelectTrigger className="w-full max-w-48">
+                                    <SelectValue/>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        {product.options.storages.map((item) => (
+                                            <SelectItem key={item.code} value={String(item.code)}>
+                                                {item.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
 
-                        <Select value={storageCode} onValueChange={setStorageCode}>
-                            <SelectTrigger className="w-full max-w-48">
-                                <SelectValue/>
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectGroup>
-                                    {product.options.storages.map((item) => (
-                                        <SelectItem key={item.code} value={String(item.code)}>
-                                            {item.name}
-                                        </SelectItem>
-                                    ))}
-                                </SelectGroup>
-                            </SelectContent>
-                        </Select>
                     </div>
                     <div className="mt-4">
                         <Button onClick={() => addToCart({id: product.id, colorCode, storageCode})}
