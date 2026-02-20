@@ -1,13 +1,17 @@
 import { useState } from 'react'
-import './App.css'
+import {Route, Switch} from 'wouter';
+import ProductListPage from "@/pages/ProductListPage.jsx";
+import ProductDetailPage from "@/pages/ProductDetailPage.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <h1>
-      Hello, ITX!
-    </h1>
+    <>
+        <Switch>
+            <Route path="/" component={ProductListPage}></Route>
+            <Route path="/product/:id" component={ProductDetailPage}></Route>
+        </Switch>
+    </>
   )
 }
 
