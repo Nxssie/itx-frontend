@@ -8,8 +8,8 @@ const Header = () => {
 
     return (
         <>
-         <div className="flex justify-between items-center m-5">
-            <Link to={"/"}>ITX</Link>
+         <div className="flex justify-between items-center px-5 py-3 border-b">
+            <Link to={"/"} className="text-xl font-bold">ITX</Link>
              <div className="flex items-center gap-2">
                  <ShoppingCartIcon className="w-auto h-6"/>
                  <Badge className="w-auto h-4">{count}</Badge>

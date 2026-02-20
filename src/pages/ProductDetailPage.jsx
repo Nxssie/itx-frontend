@@ -20,7 +20,8 @@ import {
 import {useCart} from "@/hooks/useCart.js";
 import {Button} from "@/components/ui/button.jsx";
 import {CaretLeftIcon, WarningCircleIcon} from "@phosphor-icons/react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert"
+import {Separator} from "@/components/ui/separator"
 
 const ProductDetailPage = () => {
     const params = useParams();
@@ -32,17 +33,17 @@ const ProductDetailPage = () => {
     const [cartError, setCartError] = useState(null);
 
     useEffect(() => {
-        api.getProductDetail(params.id).then(setProduct);
+        api.getProductDetail(params.id).then(setProduct).catch(e => setError(e.message));
     }, [])
 
     if (!product) {
         return <p>Loading...</p>
     }
 
-    if( error ) {
+    if (error) {
         return (
             <Alert variant="destructive" className="max-w-md">
-                <WarningCircleIcon />
+                <WarningCircleIcon/>
                 <AlertTitle>Error</AlertTitle>
                 <AlertDescription>
                     {error}
@@ -61,29 +62,33 @@ const ProductDetailPage = () => {
                             <Link to="/">Home</Link>
                         </BreadcrumbLink>
                     </BreadcrumbItem>
-                    <BreadcrumbSeparator />
+                    <BreadcrumbSeparator/>
                     <BreadcrumbItem>
                         <BreadcrumbPage>{product.brand} {product.model}</BreadcrumbPage>
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
-            <div className="grid grid-cols-1 md:grid-cols-2">
-                <img className="mt-4 object-contain mx-auto" src={product.imgUrl}/>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+                <div className="border rounded-lg p-4 flex justify-center items-center">
+                    <img className="object-contain w-full max-h-96" src={product.imgUrl}/>
+                </div>
+
                 <div>
                     <h1 className="text-2xl font-bold">{product.brand} - {product.model}</h1>
                     <p className="text-xl font-semibold">{product.price}€</p>
-                    <ul>
-                        <li>CPU: {product.cpu}</li>
-                        <li>RAM: {product.ram}</li>
-                        <li>OS: {product.os}</li>
-                        <li>Display Resolution: {product.displayResolution}</li>
-                        <li>Battery: {product.battery}</li>
-                        <li>Primary Camera: {Array.isArray(product.primaryCamera) ? product.primaryCamera.join(", ") : product.primaryCamera}</li>
-                        <li>Secondary Camera: {Array.isArray(product.secondaryCmera) ? product.secondaryCmera.join(", ") : product.secondaryCmera}</li>
-                        <li>Dimensions: {product.dimentions}</li>
-                        <li>Weight: {product.weight} grams</li>
+                    <ul className="space-y-2">
+                        <li><span className="font-medium">CPU:</span> {product.cpu}</li>
+                        <li><span className="font-medium">RAM:</span> {product.ram}</li>
+                        <li><span className="font-medium">OS:</span> {product.os}</li>
+                        <li><span className="font-medium">Display Resolution:</span> {product.displayResolution}</li>
+                        <li><span className="font-medium">Battery:</span> {product.battery}</li>
+                        <li><span className="font-medium">Primary Camera:</span> {Array.isArray(product.primaryCamera) ? product.primaryCamera.join(", ") : product.primaryCamera}</li>
+                        <li><span className="font-medium">Secondary Camera:</span> {Array.isArray(product.secondaryCmera) ? product.secondaryCmera.join(", ") : product.secondaryCmera}</li>
+                        <li><span className="font-medium">Dimensions:</span> {product.dimentions}</li>
+                        <li><span className="font-medium">Weight:</span> {product.weight} grams</li>
                     </ul>
-                    <div className="flex gap-4 mt-4">
+                    <Separator className="my-4" />
+                    <div className="flex gap-4">
                         <div className="flex-1">
                             <span className="text-sm font-medium">Color</span>
                             <Select value={colorCode} onValueChange={setColorCode}>
@@ -131,7 +136,7 @@ const ProductDetailPage = () => {
                         </Button>
                         {cartError &&
                             <Alert variant="destructive" className="max-w-md mt-2">
-                                <WarningCircleIcon />
+                                <WarningCircleIcon/>
                                 <AlertTitle>Error</AlertTitle>
                                 <AlertDescription>{cartError}</AlertDescription>
                             </Alert>
