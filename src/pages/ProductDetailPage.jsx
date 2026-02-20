@@ -127,8 +127,10 @@ const ProductDetailPage = () => {
                     </div>
                     <div className="mt-4">
                         <Button
-                            onClick={() => addToCart({id: product.id, colorCode, storageCode})
-                                .catch(e => setCartError(e.message))}
+                            onClick={() => {
+                                console.log({ id: product.id, colorCode, storageCode })
+                                addToCart({id: product.id, colorCode, storageCode}).catch(e => setCartError(e.message));
+                            }}
                             disabled={!colorCode || !storageCode}
                             type="submit"
                         >
