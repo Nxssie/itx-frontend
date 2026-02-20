@@ -9,14 +9,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
 import {useCart} from "@/hooks/useCart.js";
 import {Button} from "@/components/ui/button.jsx";
 import {CaretLeftIcon, WarningCircleIcon} from "@phosphor-icons/react";
@@ -35,6 +27,15 @@ const ProductDetailPage = () => {
     useEffect(() => {
         api.getProductDetail(params.id).then(setProduct).catch(e => setError(e.message));
     }, [])
+
+    useEffect(() => {
+        if (product?.options.colors.length === 1) {
+            setColorCode(String(product.options.colors[0].code));
+        }
+        if (product?.options.storages.length === 1) {
+            setStorageCode(String(product.options.storages[0].code));
+        }
+    }, [product])
 
     if (!product) {
         return <p>Loading...</p>
@@ -55,19 +56,6 @@ const ProductDetailPage = () => {
     return (
         <>
             <Link to="/" className="flex items-center gap-1"><CaretLeftIcon/> Back </Link>
-            <Breadcrumb>
-                <BreadcrumbList>
-                    <BreadcrumbItem>
-                        <BreadcrumbLink asChild>
-                            <Link to="/">Home</Link>
-                        </BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator/>
-                    <BreadcrumbItem>
-                        <BreadcrumbPage>{product.brand} {product.model}</BreadcrumbPage>
-                    </BreadcrumbItem>
-                </BreadcrumbList>
-            </Breadcrumb>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
                 <div className="border rounded-lg p-4 flex justify-center items-center">
                     <img className="object-contain w-full max-h-96" src={product.imgUrl}/>

@@ -2,11 +2,6 @@ import {useState, useEffect} from "react";
 import {api} from "@/services/api.js";
 import ProductCard from "@/components/product/ProductCard.jsx";
 import {Input} from "@/components/ui/input.jsx";
-import {
-    Breadcrumb,
-    BreadcrumbList,
-    BreadcrumbPage,
-} from "@/components/ui/breadcrumb.jsx";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { WarningCircleIcon } from "@phosphor-icons/react"
 
@@ -24,19 +19,9 @@ const ProductListPage = () => {
 
     return (
         <>
-            <div className="flex justify-between">
-                <div className="grid grid-cols-1 gap-4">
-                    <Breadcrumb>
-                        <BreadcrumbList>
-                            <BreadcrumbPage>
-                                Home
-                            </BreadcrumbPage>
-                        </BreadcrumbList>
-                    </Breadcrumb>
-                    <span>Items: {filteredProducts.length}</span>
-                </div>
-
-                <Input className="max-w-md self-center" type="search" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
+            <div className="flex justify-between items-center">
+                <span>Items: {filteredProducts.length}</span>
+                <Input className="max-w-md" type="search" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} />
             </div>
 
             {error &&

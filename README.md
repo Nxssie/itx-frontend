@@ -50,6 +50,9 @@ To strictly comply with the API cache 1-hour expiration requirement, a custom TT
 ### Routing
 `wouter` was chosen over heavier alternatives like `react-router` because the application only requires two straightforward routes. This decision keeps the bundle size minimal and the routing logic clean.
 
+### Breadcrumb navigation
+The breadcrumb is rendered in the `Header` component and adapts dynamically based on the current route using `useLocation` from wouter. On the home page it displays "Home" as plain text, and on the product detail page it shows "Home > Product {id}" with a navigable link back to the listing. Since the Header does not have access to the product data (brand/model), the product ID from the URL is used instead to avoid introducing an additional context or prop drilling for a two-route application. If more routes or richer breadcrumb content were needed, a dedicated `BreadcrumbContext` could be created to allow each page to provide its own breadcrumb data to the Header.
+
 ### Testing approach
 Testing is intentionally focused on the core business logic rather than pure UI rendering. Unit tests validate the custom hooks (cart state management) and the crucial 1-hour expiration logic of the custom `localStorage` wrapper to ensure data is revalidated accurately.
 
@@ -57,5 +60,5 @@ Testing is intentionally focused on the core business logic rather than pure UI 
 
 - **Product listing** — responsive grid (max 4 columns) with real-time search by brand and model
 - **Product detail** — image, specs, and color/storage selectors
-- **Cart** — add products with a persistent item count in the header
+- **Cart** — add products with a persistent item count in the header. The cart count is accumulated client-side because the API POST `/cart` endpoint always returns `{ count: 1 }` rather than the total number of items in the cart
 - **Cache** — client-side API response caching using `localStorage` with a strict 1-hour expiration
